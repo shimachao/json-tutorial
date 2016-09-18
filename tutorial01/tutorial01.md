@@ -3,9 +3,20 @@
 * Milo Yip
 * 2016/9/15
 
-摘要：设置编译环境、测试驱动、解析器主要函数及各数据结构。
+本文是[《从零开始的 JSON 库教程》](https://zhuanlan.zhihu.com/json-tutorial)的第一个单元。教程练习源代码位于 [json-tutorial](https://github.com/miloyip/json-tutorial)。
 
-本文是[《从零开始的 JSON 库教程》](https://zhuanlan.zhihu.com/p/22457315)的第一个单元。教程练习源代码位于 [json-tutorial](https://github.com/miloyip/json-tutorial)。
+本单元内容：
+
+1. [JSON 是什么](#json-是什么)
+2. [搭建编译环境](#搭建编译环境)
+3. [头文件与 API 设计](#头文件与-api-设计)
+4. [JSON 语法子集](#json-语法子集)
+5. [单元测试](#单元测试)
+6. [宏的编写技巧](#宏的编写技巧)
+7. [实现解析器](#实现解析器)
+8. [关于断言](#关于断言)
+9. [总结与练习](#总结与练习)
+10. [常见问答](#常见问答)
 
 ## JSON 是什么
 
@@ -353,7 +364,7 @@ int lept_parse(lept_value* v, const char* json) {
     assert(v != NULL);
     c.json = json;
     v->type = LEPT_NULL;
-    lept_parse_whitespace(c);
+    lept_parse_whitespace(&c);
     return lept_parse_value(&c, v);
 }
 ~~~
@@ -368,7 +379,7 @@ leptjson 是一个手写的递归下降解析器（recursive descent parser）�
 * t ➔ true
 * f ➔ false
 * " ➔ string
-* 0-9/-/+ ➔ number
+* 0-9/- ➔ number
 * [ ➔ array
 * { ➔ object
 
