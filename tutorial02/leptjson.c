@@ -21,7 +21,7 @@ static int lept_parse_literal(lept_context* c, lept_value* v, const char *litera
     assert(literal != NULL);
     EXPECT(c, literal[0]);
     const char *p = literal;
-    size_t len = strlen(literal);
+    size_t len = strlen(literal) - 1;
     for (size_t i = 0; i < len; i++)
     {
         if (literal[i + 1] != c->json[i])
