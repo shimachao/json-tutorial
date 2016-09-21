@@ -45,9 +45,63 @@ static int lept_parse_literal(lept_context* c, lept_value* v, const char *litera
     return LEPT_PARSE_OK;
 }
 
+#define ISDIGIT(ch)         ((ch) >= '0' && (ch) <= '9')
+#define ISDIGIT1TO9(ch)     ((ch) >= '1' && (ch) <= '9')
+
 static int lept_parse_number(lept_context* c, lept_value* v) {
     char* end;
-    /* \TODO validate number */
+    const char *p = c->json;
+    // minus sign
+    if (*p == '-')
+    {
+        p++;
+    }
+    // integer
+    if (*p == '0')
+    {
+        p++;
+    }
+    else if (ISDIGIT1TO9(*p))
+    {
+        p++;
+        while (ISDIGIT(*p))
+        {
+            p++;
+        }
+    }
+    // decimal digits
+    if (*p == '.')
+    {
+        p++;
+        if (!ISDIGIT(*p))
+        {
+            return LEPT_PARSE_INVALID_VALUE;
+        }
+        p++;
+        while (ISDIGIT(*p))
+        {
+            p++;
+        }
+    }
+    // exponent
+    if (*p == 'e' || *p == 'E')
+    {
+        p++;
+        if (*p == '+' || *p == '-')
+        {
+            p++;
+        }
+        if (!ISDIGIT(*p))
+        {
+            return LEPT_PARSE_INVALID_VALUE;
+        }
+        p++;
+        while (ISDIGIT(*p))
+        {
+            p++;
+        }
+    }
+
     v->n = strtod(c->json, &end);
     if (c->json == end)
         return LEPT_PARSE_INVALID_VALUE;
