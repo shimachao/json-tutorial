@@ -29,7 +29,7 @@ static int lept_parse_literal(lept_context* c, lept_value* v, const char *litera
             return LEPT_PARSE_INVALID_VALUE;
         }
     }
-    c->json += len - 1;
+    c->json += len;
     switch (literal[0])
     {
     case 't':
