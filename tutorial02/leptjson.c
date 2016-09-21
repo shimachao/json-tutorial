@@ -69,6 +69,10 @@ static int lept_parse_number(lept_context* c, lept_value* v) {
             p++;
         }
     }
+    else
+    {
+        return LEPT_PARSE_INVALID_VALUE;
+    }
     // decimal digits
     if (*p == '.')
     {
@@ -101,6 +105,7 @@ static int lept_parse_number(lept_context* c, lept_value* v) {
             p++;
         }
     }
+
     if (p == c->json)
     {
         return LEPT_PARSE_INVALID_VALUE;
