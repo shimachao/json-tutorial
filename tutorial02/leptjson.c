@@ -101,11 +101,13 @@ static int lept_parse_number(lept_context* c, lept_value* v) {
             p++;
         }
     }
-
-    v->n = strtod(c->json, &end);
-    if (c->json == end)
+    if (p == c->json)
+    {
         return LEPT_PARSE_INVALID_VALUE;
-    c->json = end;
+    }
+
+    v->n = strtod(c->json, NULL);
+    c->json = p;
     v->type = LEPT_NUMBER;
     return LEPT_PARSE_OK;
 }
